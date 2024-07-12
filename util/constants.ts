@@ -1,4 +1,4 @@
-//Readable errors
+//Human Readable errors
 
 export const DEFAULT_ERROR = "Something went wrong";
 export const SERVER_ERROR = "It's not you, it's us";

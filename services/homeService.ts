@@ -1,17 +1,12 @@
 import { WeatherOverviewInterface } from "@/interfaces/WeatherOverviewInterface";
-import {
-  DEFAULT_ERROR,
-  NETWORK_ERROR,
-  UNEXPECTED_ERROR,
-} from "@/util/constants";
+import { NETWORK_ERROR, UNEXPECTED_ERROR } from "@/util/constants";
+import { generateRandomDecimal } from "@/util/generateRandomDecimal";
 import { analyzeStatusCode } from "@/util/statusError";
 
-const route = "/overview";
-const lon = "43.4345";
-const lat = "34.532";
-
-// This method is design to bubble error back up to the UI to display user friendly error
 export const getWeatherOverview = async () => {
+  const route = "/overview";
+  const lon = generateRandomDecimal().toString();
+  const lat = generateRandomDecimal().toString();
   try {
     const queryString = new URLSearchParams({
       route,
@@ -24,12 +19,13 @@ export const getWeatherOverview = async () => {
 
     return data;
   } catch (error) {
+    // This approach allows us to bubble errors back up to the UI to display user friendly errors
     if (error instanceof TypeError) {
       console.error("Network error or invalid JSON:", error);
       throw new Error(NETWORK_ERROR);
     } else if (error instanceof Error) {
       console.error("An error occurred:", error.message);
-      throw new Error(DEFAULT_ERROR);
+      throw new Error(error.message);
     } else {
       console.error("An unexpected error occurred:", error);
       throw new Error(UNEXPECTED_ERROR);

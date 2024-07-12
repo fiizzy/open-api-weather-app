@@ -12,7 +12,7 @@ import {
 
 export const analyzeStatusCode = (response: Response): void | Error => {
   if (!response.ok) {
-    let errorMessage = `HTTP error! status: ${response.status}`;
+    let errorMessage = "Error: ";
 
     switch (response.status) {
       case 400:

@@ -4,13 +4,14 @@ import { ReactNode, createContext, useState } from "react";
 
 interface HomeContextProps {
   isLoading: boolean;
-  error?: string | null;
+  error: string | null;
   weatherOverview: WeatherOverviewInterface | null;
   fetchWeatherOverview: () => void;
 }
 
 export const HomeContext = createContext<HomeContextProps>({
   isLoading: false,
+  error: null,
   weatherOverview: null,
   fetchWeatherOverview: () => {},
 });
@@ -30,6 +31,7 @@ export const HomeContextProvider = ({ children }: { children: ReactNode }) => {
       setWeatherOverview(result);
     } catch (error: any) {
       setError(error.message);
+      setIsLoading(false);
     }
   };
 
